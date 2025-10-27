@@ -1,11 +1,12 @@
 import numpy as np
 from PIL import Image
 from io import BytesIO
-
 from fastapi import FastAPI, UploadFile, File
 from tensorflow.keras.applications.vgg16 import preprocess_input
 from tensorflow.keras.preprocessing import image as keras_image
 from tensorflow.keras import models
+
+
 
 app = FastAPI(title="Plant Water Prediction API")
 IMG_SIZE = 224
@@ -43,6 +44,5 @@ async def predict(file: UploadFile = File(...)):
     else:
         label = "Healthy"
 
-    # This confidence logic calculates certainty based on distance from the 0.5 threshold
     confidence = prediction if prediction >= 0.5 else 1 - prediction
     return {"prediction": label, "confidence": round(confidence, 2)}
