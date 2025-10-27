@@ -89,7 +89,6 @@ st.markdown(
         max-width: 90%;
     }
 
-    /* النصيحة - خلفية زرقاء وخط أبيض */
     .custom-tip {
         background-color: rgba(80, 160, 255, 0.3);
         color: white;
@@ -102,12 +101,10 @@ st.markdown(
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* جعل الحالة Bold */
     .status-bold {
         font-weight: 900 !important;
     }
 
-    /* تنسيق الـ Confidence نفس القديم */
     [data-testid="stMetric"] {
         background-color: rgba(255,255,255,.1);
         border-radius: 12px;
@@ -151,18 +148,21 @@ if uploaded_file is not None:
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.image(image, caption="Uploaded Image", use_container_width=True, output_format="auto")
+        resized_image = image.resize((550, 400))  
+        st.image(resized_image, caption="Uploaded Image", output_format="auto")
         st.markdown("<style>img {border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.4);}</style>", unsafe_allow_html=True)
 
     # ================== Progress Bar ==================
-    st.markdown("### Analyzing your plant's health... ")
+    status_text = st.empty()  
+    status_text.markdown("### Analyzing your plant's health ...")
     progress_bar = st.progress(0)
 
     for percent in range(100):
-        time.sleep(0.01)
+        time.sleep(0.02)
         progress_bar.progress(percent + 1)
 
     progress_bar.empty()
+    status_text.empty() 
 
     # ================== Prediction ==================
     try:
@@ -175,21 +175,20 @@ if uploaded_file is not None:
             confidence = data.get("confidence")
 
            
-            st.markdown("##### Prediction Results")
+            st.markdown("##### Your Plant’s Health Status")
 
             if label == "Healthy":
                 st.markdown("<div style='color:#00ff99; font-weight:900; font-size:1.2rem;'>✅ Status: Healthy</div>", unsafe_allow_html=True)
-                st.markdown("<div class='custom-tip'>💡 Your plant looks great! Keep giving it the same care 💚</div>", unsafe_allow_html=True)
+                st.markdown("<div class='custom-tip'> Your plant looks great! Keep giving it the same care 💚</div>", unsafe_allow_html=True)
 
             elif label == "Struggling":
                 st.markdown("<div style='color:#fff2b2; font-weight:900; font-size:1.2rem;'>⚠️ Status: Struggling</div>", unsafe_allow_html=True)
-                st.markdown("<div class='custom-tip'>💧 Your plant might need a bit more water or indirect sunlight 🌤️</div>", unsafe_allow_html=True)
+                st.markdown("<div class='custom-tip'> Your plant might need a bit more water or indirect sunlight 🌤️</div>", unsafe_allow_html=True)
 
             else:
                 st.markdown("<div style='color:#ffb2b2; font-weight:900; font-size:1.2rem;'>❌ Status: Withered</div>", unsafe_allow_html=True)
-                st.markdown("<div class='custom-tip'>🌱 It seems your plant is dehydrated. Try watering and trimming dead leaves 🪴</div>", unsafe_allow_html=True)
+                st.markdown("<div class='custom-tip'> It seems your plant is dehydrated. Try watering and trimming dead leaves 🪴</div>", unsafe_allow_html=True)
 
-            # Confidence بنفس تصميم الكود القديم
             if confidence is not None:
                 st.metric(label="Confidence", value=f"{float(confidence) * 100:.1f}%")
             else:
