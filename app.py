@@ -25,7 +25,7 @@ def load_image(image_path):
 
 def load_model():
 
-    model = models.load_model('models/modelvgg16.keras')
+    model = models.load_model('models/modelvgg16ver2.keras')
     print(model.summary())
     return model
 
