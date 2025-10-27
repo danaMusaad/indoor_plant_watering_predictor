@@ -12,6 +12,7 @@ The goal is to make plant care smarter, simpler, and more sustainable 🌱
 
 
 ⚙️ Technologies Used
+
 	•	Frontend: Streamlit (for user interface)
 	
 	•	Backend: FastAPI (for model API)
@@ -24,6 +25,7 @@ The goal is to make plant care smarter, simpler, and more sustainable 🌱
 
 
 💻 How It Works
+
 	1.	The user uploads a photo of their plant.
 	
 	2.	The image is sent to the FastAPI model API.
@@ -34,6 +36,7 @@ The goal is to make plant care smarter, simpler, and more sustainable 🌱
 
 
 Example Predictions
+
 	•	✅ Healthy – Your plant looks great! Keep the same routine.
 	
 	•	⚠️ Struggling – Might need a bit more water or sunlight.
@@ -43,6 +46,7 @@ Example Predictions
 
 
 👩🏻‍💻 Team Members
+
 	•	Dana Aljohani
 	
 	•	Teaf Alghamdi
@@ -57,4 +61,5 @@ Example Predictions
 🎯 Project Goal
 
 To help plant owners take better care of their plants using machine learning and a simple, modern interface🌿
+
 
