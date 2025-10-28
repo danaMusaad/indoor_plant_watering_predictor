@@ -178,15 +178,15 @@ if uploaded_file is not None:
             st.markdown("##### Your Plant’s Health Status")
 
             if label == "Healthy":
-                st.markdown("<div style='color:#00ff99; font-weight:900; font-size:1.2rem;'>✅ Status: Healthy</div>", unsafe_allow_html=True)
+                st.markdown("<div style='color:#00ff99; font-weight:900; font-size:1.2rem;'> Status: Healthy ✅</div>", unsafe_allow_html=True)
                 st.markdown("<div class='custom-tip'> Your plant looks great! Keep giving it the same care 💚</div>", unsafe_allow_html=True)
 
             elif label == "Struggling":
-                st.markdown("<div style='color:#fff2b2; font-weight:900; font-size:1.2rem;'>⚠️ Status: Struggling</div>", unsafe_allow_html=True)
+                st.markdown("<div style='color:#fff2b2; font-weight:900; font-size:1.2rem;'> Status: Struggling ⚠️</div>", unsafe_allow_html=True)
                 st.markdown("<div class='custom-tip'> Your plant might need a bit more water or indirect sunlight 🌤️</div>", unsafe_allow_html=True)
 
             else:
-                st.markdown("<div style='color:#ffb2b2; font-weight:900; font-size:1.2rem;'>❌ Status: Withered</div>", unsafe_allow_html=True)
+                st.markdown("<div style='color:#ffb2b2; font-weight:900; font-size:1.2rem;'> Status: Withered ❌</div>", unsafe_allow_html=True)
                 st.markdown("<div class='custom-tip'> It seems your plant is dehydrated. Try watering and trimming dead leaves 🪴</div>", unsafe_allow_html=True)
 
             if confidence is not None:
