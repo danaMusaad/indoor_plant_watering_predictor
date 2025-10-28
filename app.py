@@ -21,7 +21,7 @@ print("Model loaded successfully.")
 model.summary()
 
 @app.post("/predict")
-async def predict(file: UploadFile = File(...)):
+async def predict(file):
     contents = await file.read()
 
     img = Image.open(BytesIO(contents))
