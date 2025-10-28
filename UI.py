@@ -7,7 +7,6 @@ st.set_page_config(layout="wide", page_title="Smart Plant Care")
 
 API_URL = "https://indoorplantwateringpredicto-949564736819.europe-west1.run.app/predict"
 
-# ================== STYLE ==================
 st.markdown(
     """
     <style>
@@ -61,25 +60,63 @@ st.markdown(
         color: #f2f2f2;
     }
 
+    /* ================== Drag & Drop Box ================== */
     .stFileUploader {
         border: 2px dashed white;
-        padding: 1.5rem;
         border-radius: 20px;
         background-color: rgba(255, 255, 255, 0.15);
         width: 90%;
-        max-width: 600px;
+        max-width: 550px;
         margin: 0 auto;
+        padding: clamp(0.8rem, 2vw, 1.5rem);
         transition: all 0.3s ease-in-out;
+        text-align: center;
     }
 
     .stFileUploader:hover {
         background-color: rgba(255, 255, 255, 0.25);
-        transform: scale(1.02);
+        transform: scale(1.01);
     }
 
     .stFileUploader label {
         color: white !important;
-        font-size: 1.1rem;
+        font-size: clamp(0.8rem, 1.8vw, 1.05rem) !important;
+        font-weight: 500;
+    }
+
+    [data-testid="stFileUploaderDropzoneInstructions"] p,
+    [data-testid="stFileUploaderDropzoneInstructions"] span {
+        font-size: clamp(0.7rem, 1.6vw, 0.95rem) !important;
+        line-height: 1.2rem !important;
+        color: #f5f5f5 !important;
+        font-weight: 400 !important;
+    }
+
+    [data-testid="stFileUploaderButton"] {
+        background-color: #777777 !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 18px !important;
+        font-weight: 600;
+        font-size: clamp(0.75rem, 1.5vw, 1rem) !important;
+        padding: clamp(0.35rem, 1vw, 0.6rem) clamp(1rem, 2vw, 1.3rem) !important;
+        transition: 0.3s ease;
+    }
+
+    [data-testid="stFileUploaderButton"]:hover {
+        background-color: #999999 !important;
+        color: #ffffff !important;
+    }
+
+    @media (max-width: 400px) {
+        .stFileUploader {
+            width: 85% !important;
+            padding: 0.7rem !important;
+        }
+        [data-testid="stFileUploaderButton"] {
+            font-size: 0.75rem !important;
+            padding: 0.4rem 1rem !important;
+        }
     }
 
     .uploaded-img {
@@ -132,17 +169,14 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# ================== HEADER ==================
 st.markdown("<div class='title'>Plant Health <span class='highlight'>Predictor</span></div>", unsafe_allow_html=True)
 st.markdown("<div class='subtitle'>Smart Way to Check Your Plant's Health 🌿</div>", unsafe_allow_html=True)
 
-# ================== FILE UPLOAD ==================
 uploaded_file = st.file_uploader(
     "Drag & drop or click to upload your plant image 🌱",
     type=["jpg", "png", "jpeg"]
 )
 
-# ================== IMAGE & PREDICTION ==================
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
 
@@ -152,7 +186,6 @@ if uploaded_file is not None:
         st.image(resized_image, caption="Uploaded Image", output_format="auto")
         st.markdown("<style>img {border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.4);}</style>", unsafe_allow_html=True)
 
-    # ================== Progress Bar ==================
     status_text = st.empty()  
     status_text.markdown("### Analyzing your plant's health ...")
     progress_bar = st.progress(0)
@@ -164,7 +197,6 @@ if uploaded_file is not None:
     progress_bar.empty()
     status_text.empty() 
 
-    # ================== Prediction ==================
     try:
         files = {'file': (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
         response = requests.post(API_URL, files=files, timeout=30)
@@ -174,7 +206,6 @@ if uploaded_file is not None:
             label = data.get("prediction")
             confidence = data.get("confidence")
 
-           
             st.markdown("##### Your Plant’s Health Status")
 
             if label == "Healthy":
@@ -187,7 +218,7 @@ if uploaded_file is not None:
 
             else:
                 st.markdown("<div style='color:#ffb2b2; font-weight:900; font-size:1.2rem;'> Status: Withered ❌</div>", unsafe_allow_html=True)
-                st.markdown("<div class='custom-tip'> It seems your plant is dehydrated. Try watering and trimming dead leaves 🪴</div>", unsafe_allow_html=True)
+                st.markdown("<div class='custom-tip'> A little water and care can bring your plant back to life it’s almost there 🪴</div>", unsafe_allow_html=True)
 
             if confidence is not None:
                 st.metric(label="Confidence", value=f"{float(confidence) * 100:.1f}%")
